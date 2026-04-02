@@ -1,0 +1,106 @@
+<Page
+    x:Class="Hackathon_Project_DavidCaballero.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hackathon_Project_DavidCaballero"
+    xmlns:models="using:Hackathon_Project_DavidCaballero.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill"
+                            ImageSource="/Assets/sus.jpg"
+                            Opacity="0.1"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,12">
+                <TextBlock Text="Tech Hackathon Members"
+                           FontSize="28"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="FilterPanel" Grid.Row="0" Margin="12,0,12,8">
+                    <TextBlock Text="Members By Region or Challenge:"
+                               Margin="0,0,0,6"/>
+                    <ComboBox x:Name="cmbFilterType"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText="Select filter type"
+                              SelectionChanged="cmbFilterType_SelectionChanged"
+                              Margin="0,0,0,6">
+                        <ComboBoxItem Content="Region"/>
+                        <ComboBoxItem Content="Challenge"/>
+                    </ComboBox>
+                    <ComboBox x:Name="cmbFilterValue"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText=" - All - "
+                              SelectionChanged="cmbFilterValue_SelectionChanged"
+                              Margin="0,0,0,6"/>
+                    <TextBlock x:Name="txtCount"
+                               Margin="0,4,0,0"
+                               FontSize="14"
+                               Opacity="0.8"
+                               Text=""/>
+                </StackPanel>
+                <GridView x:Name="gvMembers"
+                          Grid.Row="1"
+                          Margin="30,0,0,0"
+                          SelectionMode="Single"
+                          SelectionChanged="gvMembers_SelectionChanged">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="8"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Member">
+                            <Border Background="#F9FFFFFF"
+                                    CornerRadius="6"
+                                    Padding="10">
+                                <StackPanel Width="300" Spacing="4">
+                                    <TextBlock Text="{x:Bind Summary}" FontSize="24"/>
+                                    <TextBlock Text="{x:Bind Organization}" FontSize="14"/>
+                                    <TextBlock Text="{x:Bind RegionID, Mode=OneWay}"
+                                               FontSize="14"
+                                               Opacity="0.8"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+
+            <ProgressRing x:Name="progRing"
+                          Grid.Row="1"
+                          Width="60"
+                          Height="60"
+                          IsActive="False"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"/>
+
+            <RelativePanel Grid.Row="2">
+                <Button x:Name="btnRefresh" Content="Refresh" Click="btnRefresh_Click" Margin="6"/>
+                <Button x:Name="btnAdd" Content="Add" Click="btnAdd_Click" Margin="6" RelativePanel.RightOf="btnRefresh"/>
+                <Button x:Name="btnEdit" Content="Edit" Click="btnEdit_Click" Margin="6" RelativePanel.RightOf="btnAdd"/>
+                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="6" RelativePanel.RightOf="btnEdit"/>
+            </RelativePanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
